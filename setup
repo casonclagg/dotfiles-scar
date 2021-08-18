@@ -100,12 +100,49 @@ function install_random() {
   sudo ufw status
 
   # Other things
-  sudo apt install -y net-tools rhash gimp keepass2 signal-desktop nvidia-cuda-toolkit
+  sudo apt install -y net-tools rhash gimp keepass2 nvidia-cuda-toolkit
 
   # Install Lutris
   sudo add-apt-repository ppa:lutris-team/lutris -y
   sudo apt update
   sudo apt install -y lutris
+}
+
+function install_scar() {
+  # https://liamfrappell.medium.com/fixing-black-screen-and-keyboard-shutdown-issues-on-an-asus-rog-strix-scar-2021-laptop-in-ubuntu-20-9ce964bf34d0
+  # Assumes kernel is 5.11.0-16
+  ASSUMED_KERNEL_VERSION="5.11.0-16"
+
+  curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_asd.bin -o green_sardine_asd.bin
+  curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_ce.bin -o green_sardine_ce.bin
+  curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_dmcub.bin -o green_sardine_dmcub.bin
+  curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_me.bin -o green_sardine_me.bin
+  curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_mec.bin -o green_sardine_mec.bin
+  curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_mec2.bin -o green_sardine_mec2.bin
+  curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_pfp.bin -o green_sardine_pfp.bin
+  curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_rlc.bin -o green_sardine_rlc.bin
+  curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_sdma.bin -o green_sardine_sdma.bin
+  curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_ta.bin -o green_sardine_ta.bin
+  curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_vcn.bin -o green_sardine_vcn.bin
+
+  sudo cp ./*.bin /lib/firmware/amdgpu
+  sudo wget https://raw.githubusercontent.com/torvalds/linux/master/scripts/module.lds.S -O /usr/src/linux-headers-$ASSUMED_KERNEL_VERSION-generic/scripts/module.lds
+  sudo sed -i '$ d' /usr/src/linux-headers-$ASSUMED_KERNEL_VERSION-generic/scripts/module.lds
+  sudo update-initramfs -u
+
+  rm green_sardine_asd.bin
+  rm green_sardine_ce.bin
+  rm green_sardine_dmcub.bin
+  rm green_sardine_me.bin
+  rm green_sardine_mec.bin
+  rm green_sardine_mec2.bin
+  rm green_sardine_pfp.bin
+  rm green_sardine_rlc.bin
+  rm green_sardine_sdma.bin
+  rm green_sardine_ta.bin
+  rm green_sardine_vcn.bin
+
+  sudo ubuntu-drivers install
 }
 
 function install_apt_packages() {
@@ -322,6 +359,16 @@ function install_docker() {
     sudo usermod -aG docker $USER
     # su ${USER}
     sudo systemctl restart docker
+
+    # install nvidia-docker2
+    distribution=ubuntu18.04 && \
+    curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -    && \ 
+    curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+    sudo apt-get update
+    sudo apt-get install -y nvidia-docker2
+    sudo systemctl restart docker
+    
+    sudo apt install nvidia-utils-470
   fi
 }
 
@@ -365,7 +412,7 @@ function main() {
         ;;
 
       f) # 
-        PACKAGES="${PACKAGES} uiapps docker vscode brave random"
+        PACKAGES="${PACKAGES} uiapps docker vscode brave random scar"
         ;;
 
       m) # minimal

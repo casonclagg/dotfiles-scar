@@ -1,6 +1,10 @@
 Installation
 ------------
 ```
+sudo apt update
+sudo apt upgrade
+sudo apt install curl
+
 # Default setup (vim, go, node, ctags, misc dev tools)
 $ curl -LSs -H 'Cache-Control: no-cache' https://github.com/casonclagg/dotfiles-full/raw/master/setup | bash
 

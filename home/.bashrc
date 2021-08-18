@@ -3,6 +3,9 @@ os=`uname`
 
 alias ls='ls --color=auto'
 
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
 # run local bash stuff (pc-specific aliases and such)
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
@@ -189,5 +192,4 @@ function vaporize() {
     rm temp.wav slow.wav verb.wav temp.mp3
 }
 
-# TODO - nvm is messed up, fix it...
-# nvm use 14
+eval "$(pyenv init --path)"
