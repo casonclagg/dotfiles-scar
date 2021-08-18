@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# vim: filetype=sh
+#
+# Things you may or may not want to do after intial setup
+
+# make a key
+SSH_EMAIL=""
+ssh-keygen -t rsa -b 4096 -C $SSH_EMAIL
+#### Put it in github...
+
+# Enable SSH
+sudo apt-get purge openssh-server
+sudo apt-get install openssh-server
+sudo service ssh status
+
+# Sound Stuff (This isnt a recipe, just random commands)
+alsactl restore
+amixer
+sudo apt-get install alsa-utils pulseaudio
+pavucontrol
+
+# Install virtualbox
+sudo apt install ./virtualbox-6.1_6.1.8-137981_Ubuntu_eoan_amd64.deb
+
+# Discord
+# signal
+# Steam
+# Zoom
