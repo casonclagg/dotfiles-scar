@@ -106,12 +106,17 @@ function install_random() {
   sudo add-apt-repository ppa:lutris-team/lutris -y
   sudo apt update
   sudo apt install -y lutris
+
+  # Install Signal
+  wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
+  cat signal-desktop-keyring.gpg | sudo tee -a /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
+  echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
+  sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
+  sudo apt update && sudo apt install signal-desktop
 }
 
 function install_scar() {
   # https://liamfrappell.medium.com/fixing-black-screen-and-keyboard-shutdown-issues-on-an-asus-rog-strix-scar-2021-laptop-in-ubuntu-20-9ce964bf34d0
-  # Assumes kernel is 5.11.0-16
-  ASSUMED_KERNEL_VERSION="5.11.0-16"
 
   curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_asd.bin -o green_sardine_asd.bin
   curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_ce.bin -o green_sardine_ce.bin
@@ -124,8 +129,10 @@ function install_scar() {
   curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_sdma.bin -o green_sardine_sdma.bin
   curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_ta.bin -o green_sardine_ta.bin
   curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_vcn.bin -o green_sardine_vcn.bin
-
   sudo cp ./*.bin /lib/firmware/amdgpu
+
+  # Assumes kernel is 5.11.0-16
+  ASSUMED_KERNEL_VERSION="5.11.0-16"
   sudo wget https://raw.githubusercontent.com/torvalds/linux/master/scripts/module.lds.S -O /usr/src/linux-headers-$ASSUMED_KERNEL_VERSION-generic/scripts/module.lds
   sudo sed -i '$ d' /usr/src/linux-headers-$ASSUMED_KERNEL_VERSION-generic/scripts/module.lds
   sudo update-initramfs -u

@@ -3,13 +3,13 @@ os=`uname`
 
 alias ls='ls --color=auto'
 
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-
 # run local bash stuff (pc-specific aliases and such)
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
 fi
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 
 source ~/.exports
 source $HOME/.homesick/repos/homeshick/homeshick.sh
@@ -193,3 +193,6 @@ function vaporize() {
 }
 
 eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
+
+BROWSER=/usr/bin/google-chrome
