@@ -5,14 +5,11 @@ sudo apt update
 sudo apt upgrade
 sudo apt install curl
 
-# Default setup (vim, go, node, ctags, misc dev tools)
-$ curl -LSs -H 'Cache-Control: no-cache' https://github.com/casonclagg/dotfiles-full/raw/master/setup | bash
+# Do this first on scar laptop
+$ curl -LSs -H 'Cache-Control: no-cache' https://github.com/casonclagg/dotfiles-scar/raw/master/scarfix.sh | bash -s
 
 # Full install with errthang (default + i3wm, chrome, docker and other apps I use)
-$ curl -LSs -H 'Cache-Control: no-cache' https://github.com/casonclagg/dotfiles-full/raw/master/setup | bash -s -- -f
-
-# Minimal install (just vim)
-$ curl -LSs -H 'Cache-Control: no-cache' https://github.com/casonclagg/dotfiles-full/raw/master/setup | bash -s -- -m
+$ curl -LSs -H 'Cache-Control: no-cache' https://github.com/casonclagg/dotfiles-scar/raw/master/setup | bash -s -- -f
 ```
 
 Refreshing after changes
@@ -41,8 +38,7 @@ There's a special local files folder somewhere secret! Use it after setup.
 
 TODO
 -----
-1. Setup multiple monitors for i3
-    - Currently have to use `sudo nvidia-settings`
-2. Turn on the nvidia whatever pipeline so there no screen tearing
-3. Sound is absolute trash, not sure how to fix  
+1. Sound is absolute trash, not sure how to fix  
+2. VirtualBox is broken and removed
 
+    sudo ntfsfix /dev/nvmeXXXX

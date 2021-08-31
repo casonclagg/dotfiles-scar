@@ -15,8 +15,8 @@ bindsym XF86AudioPrev exec playerctl previous
 # configure monitors
 # How to find your monitors:
 # xrandr
-set $monitor_one eDP
-set $monitor_two HDMI
+set $monitor_one eDP-1-0
+set $monitor_two HDMI-A-1-0
 
 # configure workspaces
 set $ws1 1
@@ -32,7 +32,7 @@ set $ws0 0:10
 
 # bind workspaces to monitors
 workspace $ws1 output $monitor_one
-workspace $ws2 output $monitor_two
+workspace $ws2 output $monitor_one
 workspace $ws3 output $monitor_two
 workspace $ws4 output $monitor_two
 workspace $ws5 output $monitor_two
@@ -87,6 +87,7 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+backslash exec google-chrome
+bindsym $mod+] exec nautilus
 
 # kill focused window
 bindsym $mod+Shift+q kill

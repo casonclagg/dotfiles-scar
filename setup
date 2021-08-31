@@ -51,14 +51,6 @@ function usage() {
   "
 }
 
-function install_brave() {
-  sudo apt install apt-transport-https curl gnupg
-  curl -s https://brave-browser-apt-release.s3.brave.com/brave-core.asc | sudo apt-key --keyring /etc/apt/trusted.gpg.d/brave-browser-release.gpg add -
-  echo "deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main" | sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-  sudo apt update
-  sudo apt install -y brave-browser
-}
-
 # TODO - Test this
 function install_random() {
   pip install --upgrade pip
@@ -71,8 +63,8 @@ function install_random() {
   sudo apt install -y numlockx
   sudo alsa force-reload
 
-  # Install Virtualbox & VLC & ImageMagick
-  sudo apt install -y virtualbox imagemagick vlc
+  # Install VLC & ImageMagick
+  sudo apt install -y imagemagick vlc
   
   # Install powerline
   pip install powerline-shell
@@ -100,7 +92,7 @@ function install_random() {
   sudo ufw status
 
   # Other things
-  sudo apt install -y net-tools rhash gimp keepass2 nvidia-cuda-toolkit
+  sudo apt install -y net-tools rhash gimp keepass2
 
   # Install Signal
   wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
@@ -108,6 +100,8 @@ function install_random() {
   echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main' |\
   sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
   sudo apt update && sudo apt install signal-desktop
+
+  echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf > /dev/null
 }
 
 function install_scar() {
@@ -285,9 +279,12 @@ function install_uiapps() {
   # For the nvidia 3080, we need 470
   if [[ $(ubuntu-drivers devices | grep -q nvidia-driver) -eq 0 ]]; then
     if [[ $(dpkg -s nvidia-driver-470 &> /dev/null) -ne 0 ]]; then
-      sudo add-apt-repository -y ppa:graphics-drivers/ppa
-      sudo apt update
-      sudo apt install -y nvidia-driver-470
+      # sudo add-apt-repository -y ppa:graphics-drivers/ppa
+      # sudo apt update
+      # sudo apt install -y nvidia-driver-470
+      sudo apt-get remove --purge '^nvidia-.*'
+      echo 'nouveau' | sudo tee -a /etc/modules
+      sudo ubuntu-drivers install
     fi
   fi
 
@@ -325,19 +322,13 @@ function install_vscode() {
 
     # install all the extensions
     VSCODE_EXTENSIONS="
-    Angular.ng-template
     dbaeumer.vscode-eslint
     eamodio.gitlens
-    ms-azuretools.vscode-docker
     ms-python.python
     ms-vscode.wordcount
-    natewallace.angular2-inline
-    nobuhito.printcode
-    ms-vscode.Go
     christian-kohler.path-intellisense
     EditorConfig.EditorConfig
     mikestead.dotenv
-    vscodevim.vim
     "
     for ext in $VSCODE_EXTENSIONS; do
       code --install-extension $ext
@@ -370,7 +361,7 @@ function install_docker() {
     sudo apt-get install -y nvidia-docker2
     sudo systemctl restart docker
     
-    sudo apt install nvidia-utils-470
+    sudo apt install -y nvidia-utils-470 nvidia-cuda-toolkit
   fi
 }
 
@@ -385,7 +376,7 @@ function install_devtools() {
     export CLOUD_SDK_REPO="cloud-sdk-${DISTRIB_CODENAME}"
     source /etc/lsb-release
     echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-    sudo apt install apt-transport-https ca-certificates gnupg
+    sudo apt install -y apt-transport-https ca-certificates gnupg
     curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
     sudo apt update && sudo apt install -y google-cloud-sdk
   fi
@@ -414,7 +405,7 @@ function main() {
         ;;
 
       f) # 
-        PACKAGES="${PACKAGES} uiapps docker vscode brave random"
+        PACKAGES="${PACKAGES} uiapps docker vscode random"
         ;;
 
       m) # minimal
