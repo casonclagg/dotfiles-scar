@@ -16,7 +16,7 @@ bindsym XF86AudioPrev exec playerctl previous
 # How to find your monitors:
 # xrandr
 set $monitor_one eDP
-set $monitor_two HDMI-A-0
+set $monitor_two HDMI-A-0-1
 
 # configure workspaces
 set $ws1 1
