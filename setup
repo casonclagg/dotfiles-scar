@@ -102,11 +102,6 @@ function install_random() {
   # Other things
   sudo apt install -y net-tools rhash gimp keepass2 nvidia-cuda-toolkit
 
-  # Install Lutris
-  sudo add-apt-repository ppa:lutris-team/lutris -y
-  sudo apt update
-  sudo apt install -y lutris
-
   # Install Signal
   wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
   cat signal-desktop-keyring.gpg | sudo tee -a /usr/share/keyrings/signal-desktop-keyring.gpg > /dev/null
@@ -131,8 +126,8 @@ function install_scar() {
   curl https://people.freedesktop.org/~agd5f/radeon_ucode/gs/green_sardine_vcn.bin -o green_sardine_vcn.bin
   sudo cp ./*.bin /lib/firmware/amdgpu
 
-  # Assumes kernel is 5.11.0-16
-  ASSUMED_KERNEL_VERSION="5.11.0-16"
+  # Assumes kernel is 5.11.0-31
+  ASSUMED_KERNEL_VERSION="5.11.0-31"
   sudo wget https://raw.githubusercontent.com/torvalds/linux/master/scripts/module.lds.S -O /usr/src/linux-headers-$ASSUMED_KERNEL_VERSION-generic/scripts/module.lds
   sudo sed -i '$ d' /usr/src/linux-headers-$ASSUMED_KERNEL_VERSION-generic/scripts/module.lds
   sudo update-initramfs -u
@@ -149,7 +144,7 @@ function install_scar() {
   rm green_sardine_ta.bin
   rm green_sardine_vcn.bin
 
-  sudo ubuntu-drivers install
+  # sudo ubuntu-drivers install
 }
 
 function install_apt_packages() {
@@ -279,20 +274,20 @@ function install_dotfiles() {
     git clone --depth=1 https://github.com/andsens/homeshick.git $HOME/.homesick/repos/homeshick
     echo 'source $HOME/.homesick/repos/homeshick/homeshick.sh' >> ~/.bash_local
     source $HOME/.homesick/repos/homeshick/homeshick.sh
-    yes | homeshick clone -b casonclagg/dotfiles-full
-    yes | homeshick link /dotfiles-full
+    yes | homeshick clone -b casonclagg/dotfiles-scar
+    yes | homeshick link dotfiles-scar
   fi
 }
 
 function install_uiapps() {
   install_apt_packages "i3 pavucontrol scrot xclip vim-gnome fonts-powerline"
 
-  # For the nvidia 1070, we need 390 / 440
+  # For the nvidia 3080, we need 470
   if [[ $(ubuntu-drivers devices | grep -q nvidia-driver) -eq 0 ]]; then
-    if [[ $(dpkg -s nvidia-driver-440 &> /dev/null) -ne 0 ]]; then
+    if [[ $(dpkg -s nvidia-driver-470 &> /dev/null) -ne 0 ]]; then
       sudo add-apt-repository -y ppa:graphics-drivers/ppa
       sudo apt update
-      sudo apt install -y nvidia-driver-440
+      sudo apt install -y nvidia-driver-470
     fi
   fi
 
@@ -410,7 +405,7 @@ function install_devtools() {
 
 
 function main() {
-  PACKAGES="node golang python ctags dotfiles devtools"
+  PACKAGES="node golang python dotfiles devtools"
   local -r OPTS=':hfm'
   while builtin getopts ${OPTS} opt "${@}"; do
 
