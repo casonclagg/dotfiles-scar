@@ -92,7 +92,7 @@ function install_random() {
   sudo ufw status
 
   # Other things
-  sudo apt install -y net-tools rhash gimp keepass2
+  sudo apt install -y net-tools rhash gimp keepass2 nginx
 
   # Install Signal
   wget -O- https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > signal-desktop-keyring.gpg
