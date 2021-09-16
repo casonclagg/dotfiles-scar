@@ -196,4 +196,4 @@ eval "$(pyenv init --path)"
 eval "$(pyenv virtualenv-init -)"
 
 BROWSER=/usr/bin/google-chrome
-xrandr --output HDMI-A-0 --right-of eDP
+xrandr --output HDMI-A-1-0 --right-of eDP-1-0
