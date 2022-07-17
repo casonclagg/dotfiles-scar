@@ -68,7 +68,11 @@ function install_random() {
   
   # Install powerline
   pip install powerline-shell
-  pip install youtube-dl
+  
+  # Install youtube downloader
+  # pip install youtube-dl
+  sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+  sudo chmod a+rx /usr/local/bin/yt-dlp
   
   # Install nonsense
   sudo apt install -y ruby

@@ -178,11 +178,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_com pletion
 
 function yts() {
-    youtube-dl --extract-audio --audio-format mp3 "$1"
+    yt-dlp -f 'ba' -x --audio-format mp3 "$1" -o '%(id)s.%(ext)s'
 }
 
 function vaporize() {
-    youtube-dl --extract-audio --audio-format mp3 --output "temp.mp3" "$1"
+    yt-dlp -f 'ba' -x --audio-format mp3 "$1" -o 'temp.mp3'
     sleep 10
     ffmpeg -i temp.mp3 temp.wav
     sox temp.wav slow.wav speed 0.75
