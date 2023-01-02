@@ -38,6 +38,8 @@ alias doarabbit='docker run -p 15672:15672 -d --hostname myrabbit --name rabbit 
 alias yt='youtube-dl'
 alias k='kubectl'
 
+alias noh='history -d $(history 1)'
+
 alias ll='ls -alF'
 alias l='ls -CF'
 
@@ -142,7 +144,7 @@ if ! shopt -oq posix; then
 fi
 
 # Avoid duplicates
-export HISTCONTROL=ignoredups:erasedups
+export HISTCONTROL=ignoreboth:erasedups
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend
 
