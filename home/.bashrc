@@ -2,6 +2,7 @@
 os=`uname`
 
 alias ls='ls --color=auto'
+alias noh='history -d $(history 1)'
 
 # run local bash stuff (pc-specific aliases and such)
 if [ -f ~/.bash_local ]; then
@@ -35,7 +36,7 @@ mkdir -p ~/mongodata
 alias doamongo='docker run --name mongo -d -v ~/mongodata:/data/db -p 27017:27017 mongo'
 alias doarabbit='docker run -p 15672:15672 -d --hostname myrabbit --name rabbit rabbitmq:3-management'
 
-alias yt='youtube-dl'
+alias yt='yt-dlp'
 alias k='kubectl'
 
 alias noh='history -d $(history 1)'
@@ -182,11 +183,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_com pletion
 
 function yts() {
-    yt-dlp -f 'ba' -x --audio-format mp3 "$1" -o '%(id)s.%(ext)s'
+    yt-dlp --extract-audio --audio-format mp3 "$1"
 }
 
 function vaporize() {
-    yt-dlp -f 'ba' -x --audio-format mp3 "$1" -o 'temp.mp3'
+    yt-dlp --extract-audio --audio-format mp3 --output "temp.mp3" "$1"
     sleep 10
     ffmpeg -i temp.mp3 temp.wav
     sox temp.wav slow.wav speed 0.75
@@ -194,6 +195,15 @@ function vaporize() {
     sox slow.wav verb.wav reverb 80 0 66 77 0 5
     ffmpeg -i verb.wav $2
     rm temp.wav slow.wav verb.wav temp.mp3
+}
+
+function sloworize() {
+    youtube-dl --extract-audio --audio-format mp3 --output "temp.mp3" "$1"
+    sleep 60
+    ffmpeg -i temp.mp3 temp.wav
+    sox temp.wav slow.wav tempo 0.96
+    ffmpeg -i slow.wav $2
+    rm temp.wav slow.wav temp.mp3
 }
 
 eval "$(pyenv init --path)"
