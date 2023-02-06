@@ -66,6 +66,9 @@ function install_random() {
   # Install VLC & ImageMagick
   sudo apt install -y imagemagick vlc
   
+  # networking
+  sudo apt install -y netcat
+
   # Install powerline
   pip install powerline-shell
   
