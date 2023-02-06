@@ -40,7 +40,7 @@ alias k='kubectl'
 
 alias noh='history -d $(history 1)'
 
-alias ll='ls -alF'
+alias ll='ls -alFt'
 alias l='ls -CF'
 
 # alias homesick-push='cd ~/.homesick/repos/dotfiles-full && git add -A && git commit -m "random update" && git push'
