@@ -47,7 +47,7 @@ alias l='ls -CF'
 # alias homesick-push='cd ~/.homesick/repos/dotfiles-full && git add -A && git commit -m "random update" && git push'
 alias homesick-pull='homeshick pull dotfiles-full'
 
-alias stable="(trap 'kill 0' SIGINT; cd /media/ccc/evil-morty/projects/machine-learning/stable-diffusion-webui && ls && ./webui.sh & . /media/ccc/evil-morty/projects/machine-learning/stable-diffusion-slack/.venv/bin/activate && cd /media/ccc/evil-morty/projects/machine-learning/stable-diffusion-slack && python ez_slack.py)"
+alias stable="(trap 'kill 0' SIGINT; cd /media/ccc/evil-morty/projects/machine-learning/stable-diffusion-webui && ls && ./webui.sh --listen & . /media/ccc/evil-morty/projects/machine-learning/stable-diffusion-slack/.venv/bin/activate && cd /media/ccc/evil-morty/projects/machine-learning/stable-diffusion-slack && python ez_slack.py)"
 alias sds='cd /media/ccc/evil-morty/projects/machine-learning/stable-diffusion-slack'
 
 if [[ "$os" == 'Linux' ]]; then
