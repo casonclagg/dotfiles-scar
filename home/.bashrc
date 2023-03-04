@@ -48,6 +48,7 @@ alias l='ls -CF'
 alias homesick-pull='homeshick pull dotfiles-full'
 
 alias stable="(trap 'kill 0' SIGINT; cd /media/ccc/evil-morty/projects/image-gen/stable-diffusion-webui && ls && ./webui.sh --listen & . /media/ccc/evil-morty/projects/machine-learning/stable-diffusion-slack/.venv/bin/activate && cd /media/ccc/evil-morty/projects/machine-learning/stable-diffusion-slack && python ez_slack.py)"
+alias stable_only="(trap 'kill 0' SIGINT; cd /media/ccc/evil-morty/projects/image-gen/stable-diffusion-webui && ls && ./webui.sh --listen)"
 alias sds='cd /media/ccc/evil-morty/projects/machine-learning/stable-diffusion-slack'
 
 if [[ "$os" == 'Linux' ]]; then
