@@ -60,6 +60,9 @@ if [[ "$os" == 'Linux' ]]; then
   alias ex='open . &'
 fi
 
+alias cccapi="cd /media/ccc/evil-morty/projects/cason/ccc_api && . venv/bin/activate && python server.py && ngrok http --region=us --domain=$NGROK_DOMAIN 5005"
+alias vvv=". venv/bin/activate"
+
 alias gitlogs='git log --decorate --graph --oneline --all'
 
 alias killds='rm -f $(find . -name ".DS_Store" -type f)'
