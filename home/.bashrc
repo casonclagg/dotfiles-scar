@@ -51,6 +51,21 @@ alias stable="(trap 'kill 0' SIGINT; cd /media/ccc/evil-morty/projects/image-gen
 alias stable_only="(trap 'kill 0' SIGINT; cd /media/ccc/evil-morty/projects/image-gen/stable-diffusion-webui && ls && ./webui.sh --listen)"
 alias sds='cd /media/ccc/evil-morty/projects/machine-learning/stable-diffusion-slack'
 
+hotel_wifi() {
+    # Extract the default gateway IP from the output of `ip route`
+    GATEWAY_IP=$(ip route | awk '/default/ {print $3}')
+
+    # Check if the gateway IP is non-empty
+    if [ -z "$GATEWAY_IP" ]
+    then
+        echo "No default gateway found. Are you connected to a network?"
+    else
+        # Open the default gateway IP in Google Chrome
+        google-chrome-stable "http://$GATEWAY_IP"
+    fi
+}
+
+
 if [[ "$os" == 'Linux' ]]; then
   # Linux Business
   alias gh="google-chrome-stable https://github.com"
