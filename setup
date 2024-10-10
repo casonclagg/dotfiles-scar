@@ -115,7 +115,7 @@ function install_random() {
   sudo chmod +x /usr/local/bin/docker-compose
   docker-compose --version
 
-  sudo apt install -y --reinstall ttf-mscorefonts-installer
+  # sudo apt install -y --reinstall ttf-mscorefonts-installer
 
   # install gh
   curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
