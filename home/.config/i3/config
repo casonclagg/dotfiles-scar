@@ -274,3 +274,5 @@ assign [class="Discord"] $ws9
 
 exec_always --no-startup-id numlockx on
 exec --no-startup-id xautolock -time 120 -locker i3lock
+
+exec --no-startup-id xrandr --output HDMI-A-0 --right-of eDP
