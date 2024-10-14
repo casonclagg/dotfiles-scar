@@ -126,6 +126,7 @@ function install_random() {
   sudo apt install -y fluidsynth
   sudo apt install -y git-lfs
   sudo apt install -y ncdu
+  sudo apt install -y xautolock
   # sudo apt install python3.9-venv
   # sudo apt install -y google-chrome-stable
 
