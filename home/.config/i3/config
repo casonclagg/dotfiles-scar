@@ -273,3 +273,4 @@ assign [class="Discord"] $ws9
 # for_window [class="Pavucontrol"] floating enable
 
 exec_always --no-startup-id numlockx on
+exec --no-startup-id xautolock -time 120 -locker i3lock
